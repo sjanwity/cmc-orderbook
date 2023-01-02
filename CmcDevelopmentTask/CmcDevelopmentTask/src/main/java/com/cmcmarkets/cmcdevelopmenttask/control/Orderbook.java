@@ -22,8 +22,6 @@ import lombok.NoArgsConstructor;
  * @author scja0
  */
 
-@AllArgsConstructor
-@NoArgsConstructor
 public class Orderbook {
     
     @Getter
@@ -32,11 +30,17 @@ public class Orderbook {
     private SortedMap<Integer, Limit> buyLimits;
     @Getter
     private String symbol;
+    @Getter
+    private int sellQuantity; //helper for looking at ask book volume
+    @Getter
+    private int buyQuantity; //helper for looking at bid book volume
     
     public Orderbook(String symbol) {
         this.symbol = symbol;
         sellLimits = new TreeMap<>();
         buyLimits = new TreeMap<>(Collections.reverseOrder());
+        sellQuantity = 0;
+        buyQuantity = 0;
 }
     public boolean addOrder(Order order)
     {
@@ -48,16 +52,18 @@ public class Orderbook {
                 if (buyLimits.get(basePrice).addOrder(order) == true)
                 System.out.println("Successfully added order to buyLimits @ " + basePrice);
                 else
-                    System.out.println("Failed adding order to buyLimits");
+                    throw new IllegalStateException("Failed to add order to buyLimits");
             } else
             {
                 Map<Long, Order> orders = new HashMap();
                 orders.put(order.getOrderId(), order);
                 
-                Limit limit = new Limit(orders);
-                buyLimits.put(basePrice, limit);
+                Limit limit = new Limit(orders, order.getPrice());
                 System.out.println("Successfully created new buyLimits Limit @ " + basePrice);
+                buyLimits.put(basePrice, limit);
+                System.out.println("Successfully added order to buyLimits @ " + basePrice);
             }
+            buyQuantity = buyQuantity + order.getQuantity();
         } else if (order.getSide() == Side.SELL)
         {
             int basePrice = order.getPrice();
@@ -66,15 +72,17 @@ public class Orderbook {
                 if (sellLimits.get(basePrice).addOrder(order) == true )
                 System.out.println("Successfully added order to sellLimits @ " + basePrice);
                 else
-                    System.out.println("Failed adding order to sellLimits");
+                    throw new IllegalStateException("Failed to add order to sellLimits");
             } else
             {
                 Map<Long, Order> orders = new HashMap();
                 orders.put(order.getOrderId(), order);
-                Limit limit = new Limit(orders);
-                sellLimits.put(basePrice, limit);
+                Limit limit = new Limit(orders, basePrice);
                 System.out.println("Successfully created new sellLimits Limit @ " + basePrice);
+                sellLimits.put(basePrice, limit);
+                System.out.println("Successfully added order to sellLimits @ " + basePrice);
             }
+            sellQuantity = sellQuantity + order.getQuantity();
         } else return false; //something went wrong, side is null
         
         return true;
@@ -119,6 +127,7 @@ public class Orderbook {
             {
                 Order order = limit.getOrder(orderId);
                 limit.removeOrder(orderId);
+                sellQuantity = sellQuantity - order.getQuantity();
                 if (limit.isEmpty())
                     sellLimits.remove(order.getPrice());
                 return true;
@@ -131,6 +140,7 @@ public class Orderbook {
             {
                 Order order = limit.getOrder(orderId);
                 limit.removeOrder(orderId);
+                buyQuantity = buyQuantity - order.getQuantity();
                 if (limit.isEmpty())
                     buyLimits.remove(order.getPrice());
                 return true;

@@ -16,6 +16,7 @@ import lombok.NoArgsConstructor;
 public class Limit {
     
     private Map<Long, Order> orders;
+    private int price;
     
     public boolean isEmpty()
     {
@@ -30,6 +31,11 @@ public class Limit {
     public int getOrderQuantity()
     {
         return orders.values().stream().mapToInt(Order::getQuantity).sum();
+    }
+    
+    public double getLimitPrice()
+    {
+        return getOrderQuantity()*price;
     }
     
     public boolean addOrder(Order order)
