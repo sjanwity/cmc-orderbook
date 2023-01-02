@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite tests="9" failures="0" name="com.cmcmarkets.cmcdevelopmenttask.ExampleData" time="0.042" errors="0" skipped="0">
+<testsuite tests="10" failures="0" name="com.cmcmarkets.cmcdevelopmenttask.ExampleData" time="0.04" errors="0" skipped="0">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="java.vm.version" value="19.0.1+10-21"/>
@@ -63,13 +63,14 @@
     <property name="sun.cpu.endian" value="little"/>
     <property name="sun.cpu.isalist" value="amd64"/>
   </properties>
-  <testcase classname="com.cmcmarkets.cmcdevelopmenttask.ExampleData" name="addOrderTest" time="0.008"/>
-  <testcase classname="com.cmcmarkets.cmcdevelopmenttask.ExampleData" name="modifyOrderTest" time="0.007"/>
-  <testcase classname="com.cmcmarkets.cmcdevelopmenttask.ExampleData" name="multipleOrderbookAddTest" time="0.015"/>
-  <testcase classname="com.cmcmarkets.cmcdevelopmenttask.ExampleData" name="netAcrossOrderbookTest" time="0.002"/>
+  <testcase classname="com.cmcmarkets.cmcdevelopmenttask.ExampleData" name="addOrderTest" time="0.007"/>
+  <testcase classname="com.cmcmarkets.cmcdevelopmenttask.ExampleData" name="modifyOrderTest" time="0.005"/>
+  <testcase classname="com.cmcmarkets.cmcdevelopmenttask.ExampleData" name="multipleOrderbookAddTest" time="0.017"/>
+  <testcase classname="com.cmcmarkets.cmcdevelopmenttask.ExampleData" name="netAcrossOrderbookTest" time="0.003"/>
   <testcase classname="com.cmcmarkets.cmcdevelopmenttask.ExampleData" name="removeOrderLastLimitTest" time="0.001"/>
   <testcase classname="com.cmcmarkets.cmcdevelopmenttask.ExampleData" name="testExampleOrderBookFromReadMe" time="0"/>
-  <testcase classname="com.cmcmarkets.cmcdevelopmenttask.ExampleData" name="testGetBestPriceNaN" time="0"/>
-  <testcase classname="com.cmcmarkets.cmcdevelopmenttask.ExampleData" name="testQuantity" time="0.003"/>
-  <testcase classname="com.cmcmarkets.cmcdevelopmenttask.ExampleData" name="ztestGetBestPrice" time="0.006"/>
+  <testcase classname="com.cmcmarkets.cmcdevelopmenttask.ExampleData" name="testGetBestPriceNaN" time="0.001"/>
+  <testcase classname="com.cmcmarkets.cmcdevelopmenttask.ExampleData" name="testQuantity" time="0.002"/>
+  <testcase classname="com.cmcmarkets.cmcdevelopmenttask.ExampleData" name="ztestGetBestBuyPrice" time="0.004"/>
+  <testcase classname="com.cmcmarkets.cmcdevelopmenttask.ExampleData" name="ztestGetBestSellPrice" time="0"/>
 </testsuite>

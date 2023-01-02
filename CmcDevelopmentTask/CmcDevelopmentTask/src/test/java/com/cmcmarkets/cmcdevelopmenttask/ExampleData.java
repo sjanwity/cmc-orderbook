@@ -123,13 +123,21 @@ public class ExampleData {
     public void testGetBestPriceNaN()
     {
         Assert.assertEquals(Double.NaN, orderHandler.getBestBuyPriceForQuantity("HSBA", 9999), 0);
+        Assert.assertEquals(Double.NaN, orderHandler.getBestSellPriceForQuantity("MSFT", 9999), 0);
     }
     
     @Test
-    public void ztestGetBestPrice()
+    public void ztestGetBestBuyPrice()
     {
         orderHandler.addOrder(new Order(19L, "HSBA", Side.BUY, 43, 12));
         orderHandler.addOrder(new Order(20L, "HSBA", Side.BUY, 45, 14));
         Assert.assertEquals(43.317, orderHandler.getBestBuyPriceForQuantity("HSBA", 41), 0.001);
     }
+    
+    @Test
+    public void ztestGetBestSellPrice()
+    {
+        Assert.assertEquals(19.9334, orderHandler.getBestSellPriceForQuantity("MSFT", 30), 0.001);
+    }
+    
 }

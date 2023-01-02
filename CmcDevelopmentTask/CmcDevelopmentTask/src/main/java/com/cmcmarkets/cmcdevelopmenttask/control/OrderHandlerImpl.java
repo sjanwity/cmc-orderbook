@@ -145,10 +145,30 @@ public class OrderHandlerImpl implements OrderHandler {
     
     public double getBestSellPriceForQuantity(String symbol, int quantity) {
         int currentQuantity = quantity;
+        int accountedQuantity = 0;
+        double sum = 0;
         Orderbook orderbook = orderbooks.get(symbol);
         if (orderbook.getSellQuantity() < currentQuantity)
             return NaN;
-        return 0;
+        for (Limit limit : orderbook.getSellLimits().values())
+        {
+            accountedQuantity = currentQuantity - limit.getOrderQuantity();
+            if (accountedQuantity > 0)
+            {
+                sum = sum + limit.getLimitPrice();
+            } else if (accountedQuantity == 0)
+            {
+                sum = sum + limit.getLimitPrice();
+                break;
+            } else if (accountedQuantity < 0)
+            {
+                sum = sum + currentQuantity * limit.getPrice();
+                break;
+            }
+            currentQuantity = accountedQuantity;
+            
+        }
+        return sum/quantity;
     }
 
 }
